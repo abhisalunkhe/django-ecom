@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+  
+{% block content %}        
+           
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Wishlist</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        
+        <!-- Wishlist Start -->
+        <div class="wishlist-page">
+            <div class="container-fluid">
+                <div class="wishlist-page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Add to Cart</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+                                        {% for product in wishlist_items %}
+                                        <form method="post" action="{% url 'add_to_cart' %}">
+                                            {% csrf_token %}
+                                            <tr>
+                                                <td>
+                                                    <div class="img">
+                                                        <a href="#"><img src="{{product.image.url}}" alt="Image"></a>
+                                                        <p>{{product.name}}</p>
+                                                    </div>
+                                                </td>
+                                                <td>${{product.price}}</td>
+                                                <td>
+                                                    <div class="qty">
+                                                        <button class="btn-minus"><i class="fa fa-minus"></i></button>
+                                                        <input type="text" name="quantity" value="{{product.quantity}}">
+                                                        <button class="btn-plus"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                                                    <input type="hidden" name="product_name" value="{{ product.name }}">
+                                                    <input type="hidden" name="product_price" value="{{ product.price }}">
+                                                    <input type="hidden" name="product_image" value="{{ product.image.url }}">
+                                                    <button type="submit" class="btn-cart">Add to Cart</button>
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'remove_from_wishlist' username=request.user.username product_id=product.id %}"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </form>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+    const quantityInputs = document.querySelectorAll('.qty input');
+
+    quantityInputs.forEach(input => {
+        const decrementBtn = input.parentElement.querySelector('.btn-minus');
+        const incrementBtn = input.parentElement.querySelector('.btn-plus');
+
+        decrementBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let quantity = parseInt(input.value);
+            if (!isNaN(quantity) && quantity > 1) {
+                input.value = quantity - 1;
+            }
+        });
+
+        incrementBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let quantity = parseInt(input.value);
+            if (!isNaN(quantity)) {
+                input.value = quantity + 1;
+            }
+        });
+    });
+});
+
+                                    </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Wishlist End -->
+        
+        {% endblock %}

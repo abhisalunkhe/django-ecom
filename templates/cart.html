@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+  
+{% block content %}        
+               
+       
+        
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Cart</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+
+        <h3 class="text-danger text-center">Don't forget get grand total by clicking update chart button.</h3>
+
+        
+        <!-- Cart Start -->
+        <div class="cart-page">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart-page-inner">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+                                        {% for product_id, item in cart.items %}
+                                        <tr>
+                                            <td>
+                                                <div class="img">
+                                                    <a href="#"><img src="{{item.image}}" alt="Image"></a>
+                                                    <p>{{item.name}}</p>
+                                                </div>
+                                            </td>
+                                            <td>${{item.price}}</td>
+                                            <td>{{item.quantity}}</td>
+                                            <td id="price" >${{item.total_price}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart-page-inner">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="cart-summary">
+                                        <div class="cart-content">
+                                            <h1>Cart Summary</h1>
+                                            <p>Packing Cost<span>$99</span></p>
+                                            <p>Shipping Cost<span>$1</span></p>
+                                            <h2 id="grandTotal">Grand Total<span>$100</span></h2>
+                                        </div>
+                                        <div class="cart-btn">
+                                            <button id="calculateTotalBtn">Update Cart</button>
+                                            <button onclick="sorry()">Checkout</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calculateTotalBtn = document.getElementById('calculateTotalBtn');
+        const grandTotalElement = document.getElementById('grandTotal');
+
+        calculateTotalBtn.addEventListener('click', function() {
+            let total = 0;
+            const totalPriceElements = document.querySelectorAll('#price');
+
+            totalPriceElements.forEach(element => {
+                total += parseFloat(element.innerText.replace('$', ''));
+            });
+
+            total += 100;
+
+            grandTotalElement.innerHTML = `Grand Total<span>$${total.toFixed(2)}</span>`;
+        });
+    });
+
+    function sorry(){
+        alert('Sorry for inconvenience. We will update you soon')
+    }
+</script>
+        <!-- Cart End -->
+        
+    {% endblock %}

@@ -1,0 +1,42 @@
+
+*********************** Product ***********************:
+name - Done
+deleted price - Done
+original price - Done
+image - Done
+description - Done
+rating - Done - discarded
+category -Done
+user - Done
+in_stock - Done
+
+*********************** category ***********************:
+name - Done
+
+
+*********************** review ***********************:
+cust_name - Done
+Profession - Done
+rating - Done - Discarded
+review - Done
+
+*********************** subscription ***********************:
+email - Done
+created_on - Done
+
+*********************** wishlist ***********************:
+user
+product_image
+product_name
+product_price
+quantity
+
+*********************** Login Details ***********************:
+
+*********************** Admin ***********************:
+username: admin
+password: admin
+
+*********************** User ***********************:
+username: Abhijit
+password: abhijit123
