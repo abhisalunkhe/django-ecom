@@ -11,3 +11,4 @@ To deploy this project locally, follow these steps:
 - Set up a virtual environment and install dependencies.
 - Apply database migrations to initialize the system.  
 - Start the development server.
+  ### Live Demo: https://ecom.sanisalunkhe420.repl.co/
